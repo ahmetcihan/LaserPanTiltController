@@ -2,16 +2,14 @@ This project is a C++ and Qt application for controlling a laser board mounted o
 
 Author: Ahmet Cihan AKINCA (acihana@gmail.com)
 
-Requirements:
+## Requirements:
+    C++ compiler
+    QtCreator
+    Qt framework
 
-C++ compiler
-QtCreator
-Qt framework
-
-Functionalities:
-
-Control pan and tilt movements of the laser system.
-Set laser speed for precise positioning.
+## Functionalities:
+    Control pan and tilt movements of the laser system.
+    Set laser speed for precise positioning.
 
 ![screenshot](https://github.com/ahmetcihan/LaserPanTiltController/blob/master/Screenshot%20from%202024-03-24%2016-09-18.png)
 
