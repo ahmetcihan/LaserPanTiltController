@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sarı_down.jpg</file>
+        <file>sarı_left.jpg</file>
+        <file>sarı_right.jpg</file>
+        <file>sarı_up.jpg</file>
+    </qresource>
+</RCC>
