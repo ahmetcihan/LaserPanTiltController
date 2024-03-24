@@ -63,40 +63,25 @@ MainWindow::MainWindow(QWidget *parent) :
                                                 "border-width: 0px ;");
 
 }
-void MainWindow::send_pan_left(void){
+void MainWindow::serial_command(const char *ch_p, QSpinBox *spinbox){
     QByteArray data;
     data.resize(10);
 
-    data[0] = 'R';
-    data[1] = 'U';
-    data[2] = 'N';
-    data[3] = 'X';
-    data[4] = '0';
-    data[5] = ((ui->spinBox_speed_pan->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_speed_pan->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_speed_pan->value()) % 256);
+    for(char i = 0; i < 5; i++){
+        data[i] = ch_p[i];
+    }
+    data[5] = ((spinbox->value() / (256*256)) % 256);
+    data[6] = ((spinbox->value() / (256)) % 256);
+    data[7] = ((spinbox->value()) % 256);
     EOL(data.data(),8);
-
     serial.write(data);
-
+}
+void MainWindow::send_pan_left(void){
+    serial_command((char *)"RUNX0",ui->spinBox_max_speed_pan);
     qDebug(__FUNCTION__);
 }
 void MainWindow::send_pan_right(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'R';
-    data[1] = 'U';
-    data[2] = 'N';
-    data[3] = 'X';
-    data[4] = '1';
-    data[5] = ((ui->spinBox_speed_pan->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_speed_pan->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_speed_pan->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"RUNX1",ui->spinBox_max_speed_pan);
     qDebug(__FUNCTION__);
 }
 void MainWindow::send_pan_stop(void){
@@ -114,39 +99,11 @@ void MainWindow::send_pan_stop(void){
     qDebug(__FUNCTION__);
 }
 void MainWindow::send_tilt_up(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'R';
-    data[1] = 'U';
-    data[2] = 'N';
-    data[3] = 'Z';
-    data[4] = '0';
-    data[5] = ((ui->spinBox_speed_tilt->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_speed_tilt->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_speed_tilt->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"RUNZ0",ui->spinBox_speed_tilt);
     qDebug(__FUNCTION__);
 }
 void MainWindow::send_tilt_down(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'R';
-    data[1] = 'U';
-    data[2] = 'N';
-    data[3] = 'Z';
-    data[4] = '1';
-    data[5] = ((ui->spinBox_speed_tilt->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_speed_tilt->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_speed_tilt->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"RUNZ1",ui->spinBox_speed_tilt);
     qDebug(__FUNCTION__);
 }
 void MainWindow::send_tilt_stop(void){
@@ -163,80 +120,22 @@ void MainWindow::send_tilt_stop(void){
 
     qDebug(__FUNCTION__);
 }
-
 void MainWindow::pos_pan_left(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'P';
-    data[1] = 'O';
-    data[2] = 'S';
-    data[3] = 'X';
-    data[4] = '0';
-    data[5] = ((ui->spinBox_pos_pan->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_pos_pan->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_pos_pan->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"POSX0",ui->spinBox_pos_pan);
     qDebug(__FUNCTION__);
 }
 void MainWindow::pos_pan_right(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'P';
-    data[1] = 'O';
-    data[2] = 'S';
-    data[3] = 'X';
-    data[4] = '1';
-    data[5] = ((ui->spinBox_pos_pan->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_pos_pan->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_pos_pan->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"POSX1",ui->spinBox_pos_pan);
     qDebug(__FUNCTION__);
 }
 void MainWindow::pos_tilt_up(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'P';
-    data[1] = 'O';
-    data[2] = 'S';
-    data[3] = 'Z';
-    data[4] = '0';
-    data[5] = ((ui->spinBox_pos_tilt->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_pos_tilt->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_pos_tilt->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"POSZ0",ui->spinBox_pos_tilt);
     qDebug(__FUNCTION__);
 }
 void MainWindow::pos_tilt_down(void){
-    QByteArray data;
-    data.resize(10);
-
-    data[0] = 'P';
-    data[1] = 'O';
-    data[2] = 'S';
-    data[3] = 'Z';
-    data[4] = '1';
-    data[5] = ((ui->spinBox_pos_tilt->value() / (256*256)) % 256);
-    data[6] = ((ui->spinBox_pos_tilt->value() / (256)) % 256);
-    data[7] = ((ui->spinBox_pos_tilt->value()) % 256);
-    EOL(data.data(),8);
-
-    serial.write(data);
-
+    serial_command((char *)"POSZ1",ui->spinBox_pos_tilt);
     qDebug(__FUNCTION__);
 }
-
 void MainWindow::send_max_speed_tilt(void){
     QByteArray data;
     data.resize(10);
@@ -273,7 +172,6 @@ void MainWindow::send_max_speed_pan(void){
 
     qDebug(__FUNCTION__);
 }
-
 void MainWindow::toggle_relay(void){
     QByteArray data;
     data.resize(7);
@@ -289,8 +187,6 @@ void MainWindow::toggle_relay(void){
 
     qDebug(__FUNCTION__);
 }
-
-
 MainWindow::~MainWindow()
 {
     delete ui;

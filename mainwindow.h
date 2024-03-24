@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSerialPort>
+#include <QSpinBox>
 #include <QSerialPortInfo>
 #include <QDebug>
 #include <QTimer>
@@ -41,6 +42,7 @@ public slots:
     void send_max_speed_tilt(void);
     void send_max_speed_pan(void);
 
+    void serial_command(const char *ch_p, QSpinBox *spinbox);
     void send_pan_left(void);
     void send_pan_right(void);
     void send_pan_stop(void);
